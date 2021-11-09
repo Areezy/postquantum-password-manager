@@ -1,15 +1,11 @@
-import colors from 'tailwindcss/colors';
+// import colors from 'tailwindcss/colors';
 
 module.exports = {
-  purge: [],
+  mode: 'jit',
+  purge: ['./src/**/*.{js,jsx,ts,tsx,vue}'],
   darkMode: false, // or 'media' or 'class'
   theme: {
-    extend: {
-      colors: {
-        sky: colors.sky,
-        cyan: colors.cyan,
-      },
-    },
+    extend: {},
   },
   variants: {
     extend: {},
