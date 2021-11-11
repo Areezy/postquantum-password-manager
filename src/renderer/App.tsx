@@ -6,6 +6,7 @@ import Dashboard from './pages/Dashboard';
 import NewEntry from './pages/NewEntry';
 import { AppContextProvider } from './context/AppContext';
 import ViewEntry from './pages/ViewEntry';
+import FavoritesPage from './pages/FavoritesPage';
 
 export default function App() {
   return (
@@ -17,6 +18,7 @@ export default function App() {
           <Route exact path="/dashboard" component={Dashboard} />
           <Route exact path="/newentry" component={NewEntry} />
           <Route exact path="/viewentry" component={ViewEntry} />
+          <Route exact path="/favorites" component={FavoritesPage} />
         </Switch>
       </Router>
     </AppContextProvider>

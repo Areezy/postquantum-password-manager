@@ -1,8 +1,8 @@
 import { HeartIcon } from '@heroicons/react/outline';
 import { HeartIcon as SolidHeartIcon } from '@heroicons/react/solid';
-import { useState } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { useHistory } from 'react-router';
-import { useContext } from 'react';
+import {} from 'react';
 import AppContext from 'renderer/context/AppContext';
 
 export default function PasswordItem(props: any) {
@@ -10,6 +10,10 @@ export default function PasswordItem(props: any) {
   const { setActivePassword } = useContext(AppContext);
 
   const history = useHistory();
+
+  useEffect(() => {
+    setLiked(props.favorite);
+  }, []);
 
   const toggledLiked = () => {
     setLiked((prevState) => !prevState);
@@ -22,6 +26,7 @@ export default function PasswordItem(props: any) {
       url: props.url,
       password: props.password,
       note: props.note,
+      favorite: props.favorite,
     });
     history.push('/viewentry');
   };

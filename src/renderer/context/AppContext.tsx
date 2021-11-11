@@ -6,6 +6,7 @@ type AppContextState = {
   url: string;
   password: string;
   note: string;
+  favorite: boolean;
 };
 
 const AppContextInitialValue = {
@@ -16,6 +17,7 @@ const AppContextInitialValue = {
       url: 'www.facebook.com',
       password: '12345',
       note: 'This is my facebook account',
+      favorite: true,
     },
     {
       name: 'My Twitter Password',
@@ -23,6 +25,7 @@ const AppContextInitialValue = {
       url: 'www.twitter.com',
       password: '12345',
       note: 'This is my twitter account',
+      favorite: false,
     },
   ],
   setPasswords: (_passwords: AppContextState[]) => {},
@@ -32,6 +35,7 @@ const AppContextInitialValue = {
     url: 'www.facebook.com',
     password: '12345',
     note: 'This is my facebook account',
+    favorite: true
   },
   setActivePassword: (_passwords: AppContextState) => {},
 };
