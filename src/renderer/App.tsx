@@ -1,14 +1,24 @@
 import { MemoryRouter as Router, Switch, Route } from 'react-router-dom';
-import LoginPage from './pages/LoginPage';
 import 'tailwindcss/tailwind.css';
-
+import LoginPage from './pages/LoginPage';
+import SignupPage from './pages/SignupPage';
+import Dashboard from './pages/Dashboard';
+import NewEntry from './pages/NewEntry';
+import { AppContextProvider } from './context/AppContext';
+import ViewEntry from './pages/ViewEntry';
 
 export default function App() {
   return (
-    <Router>
-      <Switch>
-        <Route path="/" component={LoginPage} />
-      </Switch>
-    </Router>
+    <AppContextProvider>
+      <Router>
+        <Switch>
+          <Route exact path="/" component={LoginPage} />
+          <Route exact path="/signup" component={SignupPage} />
+          <Route exact path="/dashboard" component={Dashboard} />
+          <Route exact path="/newentry" component={NewEntry} />
+          <Route exact path="/viewentry" component={ViewEntry} />
+        </Switch>
+      </Router>
+    </AppContextProvider>
   );
 }
