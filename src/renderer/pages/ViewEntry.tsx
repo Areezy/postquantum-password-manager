@@ -129,12 +129,12 @@ export default function ViewEntry() {
               Back
               {/* <PlusIcon className="h-4 pl-2" /> */}
             </button>
-            <button
+            {/* <button
               type="submit"
               className="bg-blue-500 hover:shadow-lg text-white px-4 py-2 cursor-pointer rounded-md flex items-center active:scale-90 transition duration-200 ease-out"
             >
               Add
-            </button>
+            </button> */}
           </div>
         </form>
       </div>

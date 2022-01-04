@@ -36,7 +36,7 @@ export default function PasswordItem(props: any) {
       <div onClick={onClickHandler}>
         <p className="text-sm">{props.name || 'My Facebook Password'}</p>
         <p className="text-xs text-gray-400">
-          {props.website || 'facebook.com'}
+          {props.url || 'facebook.com'}
         </p>
       </div>
       {liked ? (

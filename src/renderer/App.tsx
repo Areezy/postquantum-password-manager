@@ -7,20 +7,23 @@ import NewEntry from './pages/NewEntry';
 import { AppContextProvider } from './context/AppContext';
 import ViewEntry from './pages/ViewEntry';
 import FavoritesPage from './pages/FavoritesPage';
+import { ChakraProvider } from '@chakra-ui/react';
 
 export default function App() {
   return (
-    <AppContextProvider>
-      <Router>
-        <Switch>
-          <Route exact path="/" component={LoginPage} />
-          <Route exact path="/signup" component={SignupPage} />
-          <Route exact path="/dashboard" component={Dashboard} />
-          <Route exact path="/newentry" component={NewEntry} />
-          <Route exact path="/viewentry" component={ViewEntry} />
-          <Route exact path="/favorites" component={FavoritesPage} />
-        </Switch>
-      </Router>
-    </AppContextProvider>
+    <ChakraProvider>
+      <AppContextProvider>
+        <Router>
+          <Switch>
+            <Route exact path="/" component={LoginPage} />
+            <Route exact path="/signup" component={SignupPage} />
+            <Route exact path="/dashboard" component={Dashboard} />
+            <Route exact path="/newentry" component={NewEntry} />
+            <Route exact path="/viewentry" component={ViewEntry} />
+            <Route exact path="/favorites" component={FavoritesPage} />
+          </Switch>
+        </Router>
+      </AppContextProvider>
+    </ChakraProvider>
   );
 }

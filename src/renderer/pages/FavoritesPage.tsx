@@ -7,7 +7,7 @@ import PasswordItem from 'renderer/components/PasswordItem';
 
 export default function FavoritesPage() {
   const { passwords } = useContext(AppContext);
-  const filteredPassword = passwords.filter((password) => {
+  const filteredPassword = passwords?.filter((password) => {
     return password.favorite;
   })
   return (
@@ -17,7 +17,7 @@ export default function FavoritesPage() {
       </div>
       <div className="col-start-2 col-end-5">
         <Header />
-        <div>{filteredPassword.map(({ name, username, url, note, password, favorite }) => {
+        <div>{filteredPassword?.map(({ name, username, url, note, password, favorite }) => {
         return <PasswordItem name={name} username={username} url={url} note={note} password={password} favorite={favorite} />;
       })}</div>
       </div>

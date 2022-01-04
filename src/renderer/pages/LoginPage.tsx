@@ -1,11 +1,31 @@
 import { LockOpenIcon, PlusIcon, EyeIcon } from '@heroicons/react/outline';
-import { useState, useEffect, useRef } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useState, useEffect, useRef, useContext } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
+import axios from 'axios';
+import AppContext from '../context/AppContext';
+import StatusModal from 'renderer/components/StatusModal';
+// const fs = window.require('fs');
+// import * as Electron from 'electron';
+interface stateType {
+  username: string;
+}
 
 export default function LoginPage() {
+  const { setAccessToken, modalActive, setModalActive } =
+    useContext(AppContext);
+  const location = useLocation<stateType>();
   const inputRef = useRef<HTMLInputElement>(null);
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
+  const [username, setUsername] = useState<string>(
+    location.state?.username || ''
+  );
+  const [password, setPassword] = useState<string>();
+
   const history = useHistory();
+
+  // useEffect(() => {
+
+  // }, [])
 
   const toggleRevealPassword = () => {
     setPasswordVisible((prevState) => !prevState);
@@ -15,9 +35,32 @@ export default function LoginPage() {
     history.push('/signup');
   };
 
-  const handleLogInClick = () => {
-    // verify details from db;
-    history.push('/dashboard');
+  const handleLogInClick = async (e: any) => {
+    e.preventDefault();
+    let userData = { username: username, password: password };
+    try {
+      const response = await axios.post(
+        'http://localhost:3000/api/users/login',
+        userData
+      );
+      if (response.status === 200) {
+        setAccessToken(response.data.token);
+        history.push('/dashboard');
+      } else {
+        setModalActive(true);
+      }
+    } catch (error: any) {
+      console.log(error.message);
+      setModalActive(true);
+    }
+  };
+
+  const usernameOnChangeHandler = (e: any) => {
+    setUsername(e.target.value);
+  };
+
+  const passwordOnChangeHandler = (e: any) => {
+    setPassword(e.target.value);
   };
 
   useEffect(() => {
@@ -30,6 +73,18 @@ export default function LoginPage() {
 
   return (
     <div className="h-screen w-full bg-gray-50 ">
+      {modalActive ? (
+        <StatusModal
+          isOpen={true}
+          error={true}
+          title={'Login Failed'}
+          content={"Check your credentials"}
+          buttonText={'Try again'}
+        />
+      ) : (
+        ''
+      )}
+
       <div className="w-[30%] mx-auto pt-20">
         <h1 className="font-bold text-lg">
           Password Manager by{' '}
@@ -57,12 +112,14 @@ export default function LoginPage() {
               type="text"
               className="focus:outline-none  hover:bg-gray-100  w-full"
               id="username"
+              onChange={usernameOnChangeHandler}
+              value={username}
             />
           </div>
           <hr className="text-gray-400" />
           <div className="">
             <label className=" text-md block" htmlFor="key">
-              Key
+              password
             </label>
             <div className="flex items-center">
               <input
@@ -70,6 +127,8 @@ export default function LoginPage() {
                 id="key"
                 ref={inputRef}
                 className="focus:outline-none hover:bg-gray-100 w-full"
+                onChange={passwordOnChangeHandler}
+                value={password}
               />
               <EyeIcon
                 onClick={toggleRevealPassword}

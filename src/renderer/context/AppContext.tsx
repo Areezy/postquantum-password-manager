@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-type AppContextState = {
+interface password  {
   name: string;
   username: string;
   url: string;
@@ -9,51 +9,53 @@ type AppContextState = {
   favorite: boolean;
 };
 
-const AppContextInitialValue = {
-  passwords: [
-    {
-      name: 'My Facebook Password',
-      username: 'Lekan',
-      url: 'www.facebook.com',
-      password: '12345',
-      note: 'This is my facebook account',
-      favorite: true,
-    },
-    {
-      name: 'My Twitter Password',
-      username: 'Lekan',
-      url: 'www.twitter.com',
-      password: '12345',
-      note: 'This is my twitter account',
-      favorite: false,
-    },
-  ],
-  setPasswords: (_passwords: AppContextState[]) => {},
-  activePassword: {
-    name: 'My Facebook Password',
-    username: 'Lekan',
-    url: 'www.facebook.com',
-    password: '12345',
-    note: 'This is my facebook account',
-    favorite: true
-  },
-  setActivePassword: (_passwords: AppContextState) => {},
-};
+interface AppContextProviderProps {
+  passwords?: password[];
+  setPasswords: (passwords: password[]) => void;
+  activePassword?: password;
+  setActivePassword: (passwords: password) => void;
+  accessToken: string,
+  setAccessToken: (token: string) => void;
+  validPassphrase: boolean,
+  setValidPassphrase: (valid: boolean) => void;
+  passphrase: string,
+  setPassphrase: (passphrase: string) => void;
+  modalActive: boolean;
+  setModalActive: (modalActive: boolean) => void;
+}
 
-const AppContext = React.createContext(AppContextInitialValue);
+
+const AppContext = React.createContext<AppContextProviderProps | null>(null);
 
 export function AppContextProvider(props: any) {
-  const [passwords, setPasswords] = useState(AppContextInitialValue.passwords);
-  const [activePassword, setActivePassword] = useState(AppContextInitialValue.activePassword);
+  const [passwords, setPasswords] = useState<password[]>([]);
+  const [activePassword, setActivePassword] = useState<password>();
+  const [accessToken, setAccessToken] = useState<string>();
+  const [validPassphrase, setValidPassphrase] = useState<boolean>();
+  const [modalActive, setModalActive] = useState<boolean>(false);
+  const [passphrase, setPassphrase] = useState<string>();
+  // const [activePassword, setActivePassword] = useState(AppContextInitialValue.activePassword);
   
+  const providerValue: AppContextProviderProps = {
+    passwords,
+    setPasswords,
+    activePassword,
+    setActivePassword,
+    accessToken,
+    setAccessToken,
+    validPassphrase,
+    setValidPassphrase,
+    passphrase,
+    setPassphrase,
+    modalActive,
+    setModalActive
+  };
+
   return (
     <AppContext.Provider
-      value={{
-        passwords: passwords,
-        setPasswords: setPasswords,
-        activePassword: activePassword,
-        setActivePassword: setActivePassword
-      }}
+      value={
+        providerValue
+      }
     >
       {props.children}
     </AppContext.Provider>
