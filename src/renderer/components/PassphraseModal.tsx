@@ -19,7 +19,7 @@ import { validatePassphrase } from '../../helpers/validationHelpers';
 // import { useState } from 'react';
 
 export default function PassphraseModal(props: any) {
-  const { accessToken, setValidPassphrase,setPassphrase } = useContext(AppContext);
+  const { accessToken, setValidPassphrase,setPassphrase, pqSecureKey } = useContext(AppContext);
   //   const { isOpen, onClose } = useDisclosure();
   const [showModal, setShowModal] = useState<boolean>(props.isOpen);
   const [show, setShow] = useState(false);
@@ -31,9 +31,9 @@ export default function PassphraseModal(props: any) {
 
   const verifyPassphrase = async () => {
     try {
-      await validatePassphrase(passphraseEntry, accessToken);
+      
+      await validatePassphrase(passphraseEntry, accessToken, pqSecureKey);
       setShowModal(false);
-      // FIXME:HUH?
       setPassphrase(passphraseEntry);
       setValidPassphrase(true);
     } catch (error) {

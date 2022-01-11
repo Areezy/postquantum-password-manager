@@ -4,8 +4,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import AppContext from '../context/AppContext';
 import StatusModal from 'renderer/components/StatusModal';
-// const fs = window.require('fs');
-// import * as Electron from 'electron';
+
 interface stateType {
   username: string;
 }
@@ -23,9 +22,6 @@ export default function LoginPage() {
 
   const history = useHistory();
 
-  // useEffect(() => {
-
-  // }, [])
 
   const toggleRevealPassword = () => {
     setPasswordVisible((prevState) => !prevState);
@@ -40,7 +36,7 @@ export default function LoginPage() {
     let userData = { username: username, password: password };
     try {
       const response = await axios.post(
-        'http://localhost:3000/api/users/login',
+        `${process.env.SERVER_ADDRESS}/api/users/login`,
         userData
       );
       if (response.status === 200) {
@@ -78,7 +74,7 @@ export default function LoginPage() {
           isOpen={true}
           error={true}
           title={'Login Failed'}
-          content={"Check your credentials"}
+          content={'Check your credentials'}
           buttonText={'Try again'}
         />
       ) : (
@@ -119,7 +115,7 @@ export default function LoginPage() {
           <hr className="text-gray-400" />
           <div className="">
             <label className=" text-md block" htmlFor="key">
-              password
+              Password
             </label>
             <div className="flex items-center">
               <input

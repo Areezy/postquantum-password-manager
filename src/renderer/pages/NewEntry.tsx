@@ -9,6 +9,7 @@ import {
 } from '../../helpers/encryptionHelpers';
 import axios from 'axios';
 import StatusModal from 'renderer/components/StatusModal';
+import addToDatabase from 'helpers/databaseHelpers';
 
 interface password {
   name: string;
@@ -24,12 +25,11 @@ export default function NewEntry() {
   // const isFirstRender = useRef<boolean>(false);
   // const [runEffect, setRunEffect] = useState<boolean>(false);
   const [name, setName] = useState<string>('');
-  const { modalActive, setModalActive } = useContext(AppContext);
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [URL, setURL] = useState<string>('');
   const [note, setNote] = useState<string>('');
-  const { passwords, setPasswords, accessToken, passphrase } =
+  const { passwords, setPasswords, accessToken, passphrase, modalActive, setModalActive, pqSecureKey } =
     useContext(AppContext);
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
   const toggleRevealPassword = () => {
@@ -46,51 +46,13 @@ export default function NewEntry() {
     }
   }, [passwordVisible]);
 
-  // useEffect(() => {
-  //   async function encryptAndSavePasswords() {
-  //     if (password.length === 0)  isFirstRender.current = true;
-  //     if (isFirstRender.current) {
-  //       try {
-  //         let encryptionKey = await generateEncryptionKey(passphrase);
-  //         let passwordsStringified = JSON.stringify(passwords);
-  //         console.log('key ' + encryptionKey);
-  //         console.log(passwordsStringified);
-  //         let encryptedPasswords = await encryptPasswords(
-  //           JSON.stringify(passwords),
-  //           encryptionKey
-  //         );
-  //         console.log(encryptedPasswords);
-  //         await axios.post(
-  //           'http://localhost:3000/api/users/data',
-  //           {
-  //             data: encryptedPasswords,
-  //           },
-  //           {
-  //             headers: {
-  //               authorization: accessToken,
-  //             },
-  //           }
-  //         );
-  //         history.push('/dashboard');
-  //         alert('Submited Successfully');
-  //       } catch (error) {
-  //         console.log(error.message);
-  //       }
-  //     } else {
-  //       isFirstRender.current = true;
-  //     }
-
-  //   }
-  //   encryptAndSavePasswords();
-  // }, [runEffect]);
-
   const onBackClickHandler = () => {
     history.push('/dashboard');
   };
 
   const onSubmitHandler = async (e: any) => {
     e.preventDefault();
-    let passwordToSave = {
+    let enteredPassword = {
       name,
       username,
       url: URL,
@@ -99,29 +61,10 @@ export default function NewEntry() {
       favorite: false,
     };
 
-    // console.log()
-    let passwordsToSave = [...passwords, passwordToSave];
+
+    let passwordsToSave = [...passwords, enteredPassword];
     try {
-      let encryptionKey = generateEncryptionKey(passphrase);
-      let passwordsStringified = JSON.stringify(passwordsToSave);
-      console.log('key ' + encryptionKey);
-      console.log(passwordsStringified);
-      let encryptedPasswords = encryptPasswords(
-        passwordsStringified,
-        encryptionKey
-      );
-      console.log(encryptedPasswords);
-      await axios.post(
-        'http://localhost:3000/api/users/data',
-        {
-          data: encryptedPasswords,
-        },
-        {
-          headers: {
-            authorization: accessToken,
-          },
-        }
-      );
+      addToDatabase(passwordsToSave, passphrase, accessToken, pqSecureKey);
       setPasswords(passwordsToSave);
       setModalActive(true);
 

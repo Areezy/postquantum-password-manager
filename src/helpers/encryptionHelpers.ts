@@ -1,5 +1,6 @@
 import CryptoJS from 'crypto-js';
 
+
 export const generateEncryptionKey = (passphrase) => {
   // TODO: MOVE SALT TO ENV
   var key128Bits = CryptoJS.PBKDF2(passphrase, process.env.KEYSALT, {
@@ -7,18 +8,17 @@ export const generateEncryptionKey = (passphrase) => {
   });
 
   return key128Bits.toString();
-
-}
+};
 
 export const encryptPasswords = (data, key) => {
-    return CryptoJS.AES.encrypt(data, key).toString();
-}
+  return CryptoJS.AES.encrypt(data, key).toString();
+};
 
 export const decryptPasswords = (data, key) => {
-    const bytes = CryptoJS.AES.decrypt(data, key);
-    const originalData = bytes.toString(CryptoJS.enc.Utf8);
-    return JSON.parse(originalData);
-}
+  const bytes = CryptoJS.AES.decrypt(data, key);
+  const originalData = bytes.toString(CryptoJS.enc.Utf8);
+  return JSON.parse(originalData);
+};
+
+
 export default () => {};
-
-

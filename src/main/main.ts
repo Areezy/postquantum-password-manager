@@ -16,6 +16,7 @@ import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
+require('dotenv').config()
 
 export default class AppUpdater {
   constructor() {
@@ -77,7 +78,6 @@ const createWindow = async () => {
     height: 728,
     icon: getAssetPath('icon.png'),
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: true,
       contextIsolation: false,
     },
@@ -107,6 +107,10 @@ const createWindow = async () => {
   mainWindow.webContents.on('new-window', (event, url) => {
     event.preventDefault();
     shell.openExternal(url);
+  });
+
+  mainWindow.webContents.on('crashed', (e) => {
+    console.log(e);
   });
 
   // Remove this if your app does not use auto updates

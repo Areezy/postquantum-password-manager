@@ -14,7 +14,7 @@ interface AppContextProviderProps {
   setPasswords: (passwords: password[]) => void;
   activePassword?: password;
   setActivePassword: (passwords: password) => void;
-  accessToken: string,
+  accessToken: string;
   setAccessToken: (token: string) => void;
   validPassphrase: boolean,
   setValidPassphrase: (valid: boolean) => void;
@@ -22,6 +22,8 @@ interface AppContextProviderProps {
   setPassphrase: (passphrase: string) => void;
   modalActive: boolean;
   setModalActive: (modalActive: boolean) => void;
+  pqSecureKey: string;
+  setPQSecureKey: (key: string) => void;
 }
 
 
@@ -34,8 +36,8 @@ export function AppContextProvider(props: any) {
   const [validPassphrase, setValidPassphrase] = useState<boolean>();
   const [modalActive, setModalActive] = useState<boolean>(false);
   const [passphrase, setPassphrase] = useState<string>();
-  // const [activePassword, setActivePassword] = useState(AppContextInitialValue.activePassword);
-  
+  const [pqSecureKey, setPQSecureKey] = useState<string>();
+
   const providerValue: AppContextProviderProps = {
     passwords,
     setPasswords,
@@ -48,7 +50,9 @@ export function AppContextProvider(props: any) {
     passphrase,
     setPassphrase,
     modalActive,
-    setModalActive
+    setModalActive,
+    pqSecureKey,
+    setPQSecureKey
   };
 
   return (

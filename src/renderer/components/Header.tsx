@@ -1,11 +1,15 @@
 import { SearchIcon, PlusIcon } from '@heroicons/react/outline';
 import { useHistory } from 'react-router';
 
-export default function Header() {
+export default function Header(props) {
   const history = useHistory();
 
   const onNewEntryClickHandler = () => {
     history.push('/newentry');
+  }
+
+  const searchValue = (event: any) => {
+    props.searchParams(event.target.value);
   }
 
   return (
@@ -17,6 +21,7 @@ export default function Header() {
           placeholder="Search Vault"
           name=""
           id=""
+          onChange={searchValue}
         />
         <button className="p-1 text-white flex mx-2 items-center active:scale-90 transition duration-200 ease-out">
           <SearchIcon className="h-6 text-white font-bold" />

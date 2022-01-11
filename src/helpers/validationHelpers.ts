@@ -6,7 +6,6 @@ interface userInfo {
   password: string;
   confirmPassword: string;
   passphrase: string;
-  
 }
 
 const validateSignUpForm = (userData: userInfo): string => {
@@ -19,7 +18,7 @@ const validateSignUpForm = (userData: userInfo): string => {
         .min(3, { message: 'Username must not be less than 3 characters' }),
       password: z.string(),
       confirmPassword: z.string(),
-      passphrase: z.string()
+      passphrase: z.string(),
     })
     .refine((data) => data.password === data.confirmPassword, {
       message: "Passwords don't match",
@@ -32,27 +31,33 @@ const validateSignUpForm = (userData: userInfo): string => {
     if (validationResult) {
       return 'Success';
     }
-  }catch (error) {
-    error.issues.map(err => {
+  } catch (error) {
+    error.issues.map((err) => {
       errorMessages.push(err.message);
-    })
+    });
   }
-  
-  return errorMessages.join(' & ');
 
+  return errorMessages.join(' & ');
 };
 
-export const validatePassphrase = async (passphrase, token) => {
-  let response = await axios.post('http://localhost:3000/api/users/verify', {
-    passphrase: passphrase,
-  }, {headers: {
-    authorization: token
-  }});
+export const validatePassphrase = async (passphrase, token, key) => {
+  let response = await axios.post(
+    `${process.env.SERVER_ADDRESS}/api/users/verify`,
+    {
+      passphrase: passphrase,
+    },
+    {
+      headers: {
+        authorization: token,
+        key: key
+      },
+    }
+  );
   if (response.status === 200) {
-    return true
-  }else {
+    return true;
+  } else {
     return false;
   }
-}
+};
 
 export default validateSignUpForm;

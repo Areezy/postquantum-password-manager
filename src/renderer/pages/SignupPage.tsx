@@ -41,7 +41,7 @@ export default function SignupPage() {
     if (validateResponse === 'Success') {
       try {
         const response = await axios.post(
-          'http://localhost:3000/api/users/create',
+          `${process.env.SERVER_ADDRESS}/api/users/create`,
           user
         );
 
@@ -49,17 +49,16 @@ export default function SignupPage() {
         if (response.status === 200) {
           // alert('Success');
           setModalActive(true);
-          
+
           setSuccess(true);
           // setModalActive(true);
 
           // history.push('/', { username: username });
-        } 
-          
+        }
       } catch (error: any) {
-         setValidationMessage('Username is taken');
-         setError(true);
-         setModalActive(true);
+        setValidationMessage('Username is taken');
+        setError(true);
+        setModalActive(true);
         console.log(error);
       }
     } else {
@@ -72,7 +71,7 @@ export default function SignupPage() {
   const successModalBtnHandler = () => {
     setModalActive(false);
     history.push('/', { username: username });
-  }
+  };
 
   const usernameOnChangeHandler = (e: any) => {
     setUsername(e.target.value);
