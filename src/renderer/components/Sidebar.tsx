@@ -5,7 +5,7 @@ import AppContext from 'renderer/context/AppContext';
 
 export default function Sidebar(props: any) {
   const history = useHistory();
-  const { setAccessToken } = useContext(AppContext);
+  const { setAccessToken, setPasswords, setValidPassphrase, setPQSecureKey, setPassphrase, setActivePassword, } = useContext(AppContext);
 
   const onFavoriteButtonClickHander = () => {
     history.push('/favorites');
@@ -16,7 +16,11 @@ export default function Sidebar(props: any) {
   };
 
   const logout = () => {
-    setAccessToken("")
+    setAccessToken("");
+    setPasswords([]);
+    setPassphrase("");
+    setPQSecureKey("");
+    setValidPassphrase(false);
     history.push('/');
   };
 

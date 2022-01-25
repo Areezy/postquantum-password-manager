@@ -2,7 +2,6 @@ import CryptoJS from 'crypto-js';
 
 
 export const generateEncryptionKey = (passphrase) => {
-  // TODO: MOVE SALT TO ENV
   var key128Bits = CryptoJS.PBKDF2(passphrase, process.env.KEYSALT, {
     keySize: 128 / 32,
   });
