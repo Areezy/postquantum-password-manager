@@ -13,6 +13,7 @@ The key exchange is performed on behalf of the client by a [proxy server.](https
 - Post-Quantum Cryptographic Algorithms for secure communication (Public key exchange and Digital Signature Verification)
 - Authentication and Authorization using JWTs
 - Client side Encryption and Decryption
+- Secure key generation
 - Search Functionality
 
 ## Built With
