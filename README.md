@@ -27,7 +27,7 @@ The key exchange is performed on behalf of the client by a [proxy server.](https
 
 ## Key Exchange Flow
 
-![key exchange diagram](https://drive.google.com/file/d/1_4pQZr58OK02EJ7r1WZksusK6SyRpqZH/view?usp=sharing)
+![key exchange diagram](readme-images/Key_exchange_flow.png)
 
 ## Installation guide
 
