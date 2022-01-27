@@ -48,3 +48,6 @@ Before the code can run, some environment variables need to be set. These are
 - "KEYSALT" Which is the salt for the encryption key generation function.
 - "SERVER_ADDRESS" Which is the URL for the server.
 - "PROXY_ADDRESS" Which is the URL for the proxy server.
+
+## Screenshot
+![Dashboard Screenshot](readme-images/Dashboard_screenshot.png)
